@@ -2,8 +2,8 @@ import sys
 import os
 import zlib
 
-def parse_blob(data:str) -> str:
-    return data.split("\0", 1)[-1]
+def parse_blob(data:bytes) -> str:
+    return data.decode().split("\x00", 1)[-1]
 
 def cat_file(hash:str) -> str:
     folderName = hash[:2]
@@ -12,7 +12,7 @@ def cat_file(hash:str) -> str:
     with open(path, "rb") as file:
         rawData:bytes = zlib.decompress(file.read())
         print(f'rawData: {rawData}', file=sys.stderr)
-        parsed = parse_blob(str(rawData))
+        parsed = parse_blob(rawData)
         print(parsed, file=sys.stderr)
         return parsed
 
@@ -43,6 +43,6 @@ def main():
 
 
 if __name__ == "__main__":
-    #print(parse_blob("blob 52\x00raspberry grape blueberry strawberry mango pineapple"))
-    main()
+    print(parse_blob(b"blob 52\x00raspberry grape blueberry strawberry mango pineapple a"))
+    #main()
 
