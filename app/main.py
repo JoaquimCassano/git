@@ -12,7 +12,7 @@ def cat_file(hash:str) -> str:
     with open(path, "rb") as file:
         rawData:bytes = zlib.decompress(file.read())
         print(f'rawData: {rawData}', file=sys.stderr)
-        parsed = parse_blob(rawData)
+        parsed = parse_blob(str(rawData))
         print(parsed, file=sys.stderr)
         return parsed
 
