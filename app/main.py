@@ -38,5 +38,5 @@ def main():
 
 
 if __name__ == "__main__":
-    #main()
-    print(parse_blob("  blob 11\0hello world \0"))
+    main()
+
