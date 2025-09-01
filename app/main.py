@@ -10,7 +10,7 @@ def cat_file(hash:str) -> str:
     fileName = hash[2:]
     path = f".git/objects/{folderName}/{fileName}"
     with open(path, "rb") as file:
-        rawData:bytes = zlib.decompress(file)
+        rawData:bytes = zlib.decompress(file.read())
         return parse_blob(str(rawData))
 
 
