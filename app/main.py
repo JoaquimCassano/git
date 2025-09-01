@@ -31,8 +31,10 @@ def main():
              f.write("ref: refs/heads/main\n")
         print("Initialized git directory")
     elif command == "cat-file":
-        hash = sys.argv[2]
-        print(cat_file(hash), end="")
+        arg = sys.argv[2]
+        if arg == "-p":
+            hash = sys.argv[3]
+            print(cat_file(hash), end="")
     else:
          raise RuntimeError(f"Unknown command #{command}")
 
