@@ -11,7 +11,10 @@ def cat_file(hash:str) -> str:
     path = f".git/objects/{folderName}/{fileName}"
     with open(path, "rb") as file:
         rawData:bytes = zlib.decompress(file.read())
-        return parse_blob(str(rawData))
+        print(f'rawData: {rawData}', file=sys.stderr)
+        parsed = parse_blob(rawData)
+        print(parsed, file=sys.stderr)
+        return parsed
 
 
 
@@ -40,5 +43,6 @@ def main():
 
 
 if __name__ == "__main__":
+    #print(parse_blob("blob 52\x00raspberry grape blueberry strawberry mango pineapple"))
     main()
 
