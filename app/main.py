@@ -43,6 +43,6 @@ def main():
 
 
 if __name__ == "__main__":
-    print(parse_blob(b"blob 52\x00raspberry grape blueberry strawberry mango pineapple a"))
-    #main()
+    #print(parse_blob(b"blob 52\x00raspberry grape blueberry strawberry mango pineapple a"))
+    main()
 
