@@ -31,7 +31,7 @@ def hash_object(filename:str) -> None:
     os.mkdir(path)
     with open(f'{path}/{fileName}', "wb") as f:
         content = f"blob {len(fileContent)}\0{fileContent}".encode("utf-8")
-        encoded = zlib.compress(data=content)
+        encoded = zlib.compress(content)
         f.write(encoded)
     print(file_hash, end="")
 
