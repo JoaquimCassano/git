@@ -25,8 +25,8 @@ def create_hash(data:str) -> str:
 def hash_object(filename:str) -> None:
     fileContent = open(filename, mode="r").read()
     file_hash = create_hash(fileContent)
-    folder = fileContent[:2]
-    fileName = fileContent[2:]
+    folder = file_hash[:2]
+    fileName = file_hash[2:]
     path = f".git/objects/{folder}"
     print(f'Creating directory at {path}', file=sys.stderr)
     os.mkdir(path)
