@@ -26,7 +26,8 @@ def main():
                 hash_object(sys.argv[3])
             else:
                 raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
-        print(create_hash(open(sys.argv[2], "r").read()), end="")
+        else:
+            print(create_hash(open(sys.argv[2], "r").read()), end="")
 
 
     else:
