@@ -1,23 +1,6 @@
 import sys
 import os
-import zlib
-
-def parse_blob(data:bytes) -> str:
-    return data.decode().split("\x00", 1)[-1]
-
-def cat_file(hash:str) -> str:
-    folderName = hash[:2]
-    fileName = hash[2:]
-    path = f".git/objects/{folderName}/{fileName}"
-    with open(path, "rb") as file:
-        rawData:bytes = zlib.decompress(file.read())
-        print(f'rawData: {rawData}', file=sys.stderr)
-        parsed = parse_blob(rawData)
-        print(parsed, file=sys.stderr)
-        return parsed
-
-
-
+from git_objects import cat_file, hash_object, create_hash
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -38,6 +21,14 @@ def main():
         if arg == "-p":
             hash = sys.argv[3]
             print(cat_file(hash), end="")
+    elif command=="hash-object":
+        if len(sys.argv) == 4:
+            if sys.argv[2] == "-w":
+                hash_object(sys.argv[3])
+            raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
+        print(create_hash(open(sys.argv[2], "r").read()), end="")
+
+
     else:
          raise RuntimeError(f"Unknown command #{command}")
 
