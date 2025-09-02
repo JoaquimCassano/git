@@ -24,7 +24,8 @@ def main():
         if len(sys.argv) == 4:
             if sys.argv[2] == "-w":
                 hash_object(sys.argv[3])
-            raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
+            else:
+                raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
         print(create_hash(open(sys.argv[2], "r").read()), end="")
 
 
