@@ -1,6 +1,6 @@
 import sys
 import os
-from git_objects import cat_file, hash_object, create_hash
+from .git_objects import cat_file, hash_object, create_hash
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
