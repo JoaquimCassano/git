@@ -5,6 +5,9 @@ import hashlib
 def parse_blob(data:bytes) -> str:
     return data.decode().split("\x00", 1)[-1]
 
+def ls_tree(path:str) -> None:
+    pass
+
 def cat_file(hash:str) -> str:
     folderName = hash[:2]
     fileName = hash[2:]
