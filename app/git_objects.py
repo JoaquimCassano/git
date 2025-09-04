@@ -22,8 +22,11 @@ def git_filemode(path: str) -> str:
     else:
         return "000000"  # unknown/unsupported
 
-def ls_tree(path:str, name_only:bool) -> None:
+def ls_tree(hash:str, name_only:bool) -> None:
     msg = ""
+    folderName = hash[:2]
+    fileName = hash[2:]
+    path = f".git/objects/{folderName}/{fileName}"
     with os.scandir(path) as entries:
         for entry in entries:
             if entry.is_file():
