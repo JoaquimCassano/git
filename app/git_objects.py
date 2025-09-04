@@ -1,12 +1,45 @@
 import sys, os
 import zlib
 import hashlib
+import stat
 
 def parse_blob(data:bytes) -> str:
     return data.decode().split("\x00", 1)[-1]
 
-def ls_tree(path:str) -> None:
-    pass
+def git_filemode(path: str) -> str:
+    st = os.lstat(path)  # use lstat so symlinks are not resolved
+
+    if stat.S_ISDIR(st.st_mode):
+        return "040000"  # tree (directory)
+    elif stat.S_ISLNK(st.st_mode):
+        return "120000"  # symbolic link
+    elif stat.S_ISREG(st.st_mode):
+        # regular file
+        if st.st_mode & stat.S_IXUSR:
+            return "100755"  # executable file
+        else:
+            return "100644"  # normal file
+    else:
+        return "000000"  # unknown/unsupported
+
+def ls_tree(path:str, name_only:bool) -> None:
+    msg = ""
+    with os.scandir(path) as entries:
+        for entry in entries:
+            if entry.is_file():
+                if name_only:
+                    msg += f"{entry.name}\n"
+                else:
+                    file_content = open(entry.path, mode="r").read()
+                    file_hash = create_hash(file_content)
+                    msg += f'{git_filemode(entry.path)} blob {file_hash}\t{entry.name}'
+            else:
+                if name_only:
+                    msg += f"{entry.name}\n"
+                else:
+                    pass
+        print(msg, end="")
+
 
 def cat_file(hash:str) -> str:
     folderName = hash[:2]

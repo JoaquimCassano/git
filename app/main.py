@@ -1,6 +1,6 @@
 import sys
 import os
-from .git_objects import cat_file, hash_object, create_hash
+from .git_objects import cat_file, hash_object, create_hash, ls_tree
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -28,8 +28,14 @@ def main():
                 raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
         else:
             print(create_hash(open(sys.argv[2], "r").read()), end="")
-
-
+    elif command=="ls-tree":
+        if len(sys.argv) == 4:
+            if sys.argv[2] == "--name-only":
+                ls_tree(sys.argv[3], name_only=True)
+            else:
+                raise RuntimeError(f"Invalid argument: {sys.argv[2]}")
+        else:
+            ls_tree(sys.argv[2], name_only=False)
     else:
          raise RuntimeError(f"Unknown command #{command}")
 
